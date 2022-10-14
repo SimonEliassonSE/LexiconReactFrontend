@@ -1,0 +1,45 @@
+[
+  {
+    "id": -1,
+    "name": "Chad",
+    "phoneNumber": 75412987,
+    "city": 3,
+    "country": 3
+  },
+  {
+    "id": -2,
+    "name": "Carl",
+    "phoneNumber": 78958987,
+    "city": 2,
+    "country": 2
+  },
+  {
+    "id": -3,
+    "name": "Allyce",
+    "phoneNumber": 78958321,
+    "city": 1,
+    "country": 1
+  },
+  {
+    "id": -4,
+    "name": "Kraken",
+    "phoneNumber": 7894561231,
+    "city": 4,
+    "country": 4
+  },
+  {
+    "id": -5,
+    "name": "Cathulu",
+    "phoneNumber": 9637812547,
+    "city": 1,
+    "country": 2
+  },
+  {
+    "id": -6,
+    "name": "Zeus",
+    "phoneNumber": 1239875642,
+    "city": 1,
+    "country": 2
+  }
+]
+
