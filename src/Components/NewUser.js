@@ -1,21 +1,24 @@
 import React, { useState, useContext } from "react";
+// , useEffect
 import { Button, Card, Form, Col, Row, Container } from "react-bootstrap";
-import { UserArray, CityArray, CountryArray } from "../index";
+import { UserArray, CityArray, CountryArray, LanguageList, UserArrayStatus } from "../index";
 // , LanguageList
-import axios from "axios";
+// import Axios from "axios";
+import Axios from "axios";
 
 function NewUser() {
   const { userList, setUserList } = useContext(UserArray);
-  const { cityList } = useContext(CityArray);
+  const { cityList } = useContext(CityArray);  
   const { countryList } = useContext(CountryArray);
-  // const { languageList } = useContext(LanguageList);
+  const { languageList} = useContext(LanguageList);
+  const { userStatus ,setUserStatus } = useContext(UserArrayStatus);
+  // , setCityList, setCountryList, setLanguageList 
 
   const [enteredName, setEnteredName] = useState("");
   const [enteredPhoneNumber, setEnteredPhoneNumber] = useState("");
   const [enteredCity, setExistingCity] = useState("");
   const [enteredCountry, setExistingCountry] = useState("");
-  // const [enteredLanguage, setExistingLanguage] = useState("");
-
+  const [enteredLanguage, setExistingLanguage] = useState("");
 
   const nameChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -35,63 +38,108 @@ function NewUser() {
     console.log(getCityId);
     setExistingCity(getCityId);
   };
-  // const handleLanguage = (e) => {
-  //   const getLanguageId = e.target.value;
-  //   console.log(getLanguageId);
-  //   setExistingLanguage(getLanguageId);
-  // };
 
+  const handleLanguage = (e) => {
+    const getLanguageId = e.target.value;
+    console.log(getLanguageId);
+    setExistingLanguage(getLanguageId);
+  };
 
-  let newPerson;
-  let getHigestId = userList[userList.length - 1];
-  // console.log(getHigestId);
+  // let newPerson;
 
   const submitHandler1 = (event) => {
     event.preventDefault();
-    // Skulle kunna skapa yterligare en context med Language för att ge användaren ett språk.
-    newPerson = {
-      id: getHigestId.id + 1,
-      // id: userList[Array.length-1]
-      name: enteredName,
-      phonenumber: enteredPhoneNumber,
-      cityId: enteredCity,
-      // countryId: enteredCountry,
-    };
+    // newPerson = {
+    //   name: enteredName,
+    //   phonenumber: enteredPhoneNumber,
+    //   cityId: enteredCity,
+    //   languageId: enteredLanguage,
+    // };
 
-    axios
-      .post(`https://localhost:7201/api/PeopleAPI`, {
-        Name: newPerson.name,
-        Phonenumber: newPerson.phonenumber,
-        CityId: newPerson.cityId,
-        // Name: "Charlie",
-        // Phonenumber: 708090605,
-        // CityId: -3,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    Axios
+    .post(`https://localhost:7201/api/PeopleAPI`, {
+      // Name: newPerson.name,
+      // Phonenumber: newPerson.phonenumber,
+      // CityId: newPerson.cityId,
+      // LanguageId: newPerson.languageId,
+      Name: enteredName,
+      Phonenumber: enteredPhoneNumber,
+      CityId: enteredCity,
+      LanguageId: enteredLanguage,
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
-    console.log(newPerson);
-    setUserList([...userList, newPerson]);
-    console.log(userList);
+    if(userStatus === null){
+      setUserStatus(1)
+    }
+
+    else {
+      let counter = userStatus;
+      ++counter;
+      setUserStatus(counter);
+      // console.log(userStatus);
+    }
+
+    // if(userStatus!== null){
+    //   let counter = userStatus;
+    //   counter++;
+    //   setUserStatus(counter);
+    //   // console.log(userStatus);
+    // }
+
+    // console.log(userStatus);
+    // const newValue = 
+    // console.log(newValue);
+    // setUserStatus()
+
+    // setUserStatus(counter);
+    // console.log(counter);
+    // counter++;
 
     setEnteredName("");
     setEnteredPhoneNumber("");
     setExistingCity("");
     setExistingCountry("");
+    setExistingLanguage("");  
+    
   };
 
-  // axios
-  //   .get("https://localhost:7201/api/PeopleAPI")
-  //   .then((res) => {
-  //     setUserList(res.data);
+
+  // Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+  // useEffect(() => {
+  //   const getPeopleData = async () => {
+  //     await Axios.get("https://localhost:7201/api/PeopleAPI")
+  //       .then((res) => {
+  //         setUserList(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
+  //   getPeopleData();
+  // }, [userStatus]);
+
+
+  // let postNewData = () => {
+  //   Axios
+  //   .post(`https://localhost:7201/api/PeopleAPI`, {
+  //     Name: newPerson.name,
+  //     Phonenumber: newPerson.phonenumber,
+  //     CityId: newPerson.cityId,
+  //     LanguageId: newPerson.languageId,
   //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   }, []);
+  //   .then(function (response) {
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  // }
 
   return (
     <Container className="mb-5 mt-5">
@@ -158,7 +206,7 @@ function NewUser() {
                 </div>
               </Col>
             </Row>
-            {/* <Row>
+            <Row>
               <Col>
               <div>
                   <label>Select Country</label>
@@ -175,7 +223,7 @@ function NewUser() {
                   </select>
               </div>
               </Col>
-            </Row> */}
+            </Row>
             <Row>
               <Col></Col>
               <Col>

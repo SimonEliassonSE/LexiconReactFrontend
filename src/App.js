@@ -5,15 +5,14 @@ import NewUser from "../src/Components/NewUser";
 import DisplayUsers from "../src/Components/DisplayUsers";
 import { useState, useMemo, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserArray, UserDetail, CityArray, CountryArray, LanguageList } from "./index";
+import { UserArray, UserDetail, CityArray, CountryArray, LanguageList, UserArrayStatus } from "./index";
+// , LanguageList
 // import {LanguageArray} from "./index";
 import Axios from "axios";
 
 // Next to do is work with Axios (it is installed already)
 
 function App() {
-  // const [userList, setUserList] = useState(userListData);
-
   const [userList, setUserList] = useState([]);
 
   const providerUsers = useMemo(
@@ -50,6 +49,13 @@ function App() {
     [languageList, setLanguageList]
   );
 
+  const [userStatus, setUserStatus] = useState(null);
+
+  const providerUserStatus = useMemo(
+    () => ({ userStatus, setUserStatus }),
+    [userStatus, setUserStatus]
+  );
+
   Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
   useEffect(() => {
     const getPeopleData = async () => {
@@ -62,13 +68,22 @@ function App() {
         });
     };
     getPeopleData();
-  }, []);
+  }, [userStatus]);
+// }, [userStatus]);
 
   // useEffect(() => {
-  //   Axios.get("https://localhost:7201/api/PeopleAPI").then((peopleData) => {
-  //     console.log(peopleData.data);
-  //   });
-  // }, []);
+  //   const getPeopleData = async () => {
+  //     await Axios.get("https://localhost:7201/api/PeopleAPI")
+  //       .then((res) => {
+  //         setUserList(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
+  //   getPeopleData();
+  // }, [userStatus]);
+// }, [userList]);
 
   useEffect(() => {
     const getCountryData = async () => {
@@ -83,11 +98,6 @@ function App() {
     getCountryData();
   }, []);
 
-  // useEffect(() => {
-  //   Axios.get("https://localhost:7201/api/CountryAPI").then((countryData) =>
-  //     console.log(countryData.data)
-  //   );
-  // }, []);
 
   useEffect(() => {
     const getCityData = async () => {
@@ -116,16 +126,12 @@ function App() {
     getLanguageData();
   }, []);
 
-  // useEffect(() => {
-  //   Axios.get("https://localhost:7201/api/CityAPI").then((cityData) =>
-  //     console.log(cityData.data)
-  //   );
-  // }, []);
+  // console.log(userStatus);
+  // console.log(userList);
+  // console.log(cityList);
+  // console.log(countryList);
+  // console.log(languageList);
 
-  console.log(userList);
-  console.log(cityList);
-  console.log(countryList);
-  console.log(languageList);
   // console.log(CountryArray);
   // console.log(CityArray);
   // console.log(UserArray);
@@ -136,6 +142,7 @@ function App() {
         <Route
           path="/"
           element={
+            <UserArrayStatus.Provider value={providerUserStatus}>
             <LanguageList.Provider value={providerLanguage}>
             <CountryArray.Provider value={providerCountryList}>
               <CityArray.Provider value={providerCityList}>
@@ -147,7 +154,8 @@ function App() {
                 </UserDetail.Provider>
               </CityArray.Provider>
             </CountryArray.Provider>
-            </LanguageList.Provider>
+           </LanguageList.Provider>
+           </UserArrayStatus.Provider>
           }
         ></Route>
         <Route

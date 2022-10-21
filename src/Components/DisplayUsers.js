@@ -1,15 +1,15 @@
 import { Table, Button, Container } from "react-bootstrap";
 import { UserArray, UserDetail } from "../index";
-// , CityArray, CountryArray
+// , CityArray, CountryArray, useEffect, UserArrayStatus
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
+
 function DisplayUsers() {
-  // const { countryList } = useContext(CountryArray);
-  // const { cityList } = useContext(CityArray);
   const { userList, setUserList } = useContext(UserArray);
   const { userDetail, setUserDetail } = useContext(UserDetail);
   const [order, setOrder] = useState("ASC");
+  // const { userStatus, setUserStatus } = useContext(UserArrayStatus)
 
   // Sorting function
   const sorting = (col) => {
@@ -29,7 +29,6 @@ function DisplayUsers() {
     }
   };
 
-  // let getCountryId;
 
   const clickHandler = (user) => {
     const userData = {
@@ -37,28 +36,15 @@ function DisplayUsers() {
       name: user.name,
       phoneNumber: user.phonenumber,
       city: user.cityId,
-      // country: user.cityId
-      // country: user.cityName,
-      // country: user.country,
     };
-    // const countryId = countryList.filter(() => {
-
-    // }
-    // )
-    // const countryId = {
-    //   city
-    //   country: user.
-    //   // const getCityName = cityList.filter((obj) => {
-    //   //   return obj.id == userDetail.city;
-    //   // });
-    // }
 
     if (userDetail !== null) {
       setUserDetail(null);
     }
     setUserDetail(userData);
-    console.log(userDetail);
+    // console.log(userDetail);
   };
+
 
   return (
     <Container className="m-6">

@@ -13,6 +13,7 @@ export const UserDetail = createContext(null);
 export const CityArray = createContext(null);
 export const CountryArray = createContext(null);
 export const LanguageList = createContext(null);
+export const UserArrayStatus = createContext(null);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
