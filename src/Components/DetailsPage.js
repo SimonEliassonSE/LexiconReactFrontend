@@ -38,8 +38,8 @@ function DetailsPage() {
     return obj.id === storeCountryId.storeCountryId;
   });
 
-  const handleDelete = () => {
-    Axios.delete(`https://localhost:7201/api/PeopleAPI/${userDetail.id}`)
+  const handleDelete = async () => {
+    await Axios.delete(`https://localhost:7201/api/PeopleAPI/${userDetail.id}`)
       .then((res) => console.log("Deleting data of id", res))
       .catch((err) => console.log(err));
     setUserList((current) =>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 // , useEffect
 import { Button, Card, Form, Col, Row, Container } from "react-bootstrap";
 import { UserArray, CityArray, CountryArray, LanguageList, UserArrayStatus } from "../index";
@@ -47,7 +47,7 @@ function NewUser() {
 
   // let newPerson;
 
-  const submitHandler1 = (event) => {
+  const submitHandler1 = async (event) => {
     event.preventDefault();
     // newPerson = {
     //   name: enteredName,
@@ -56,7 +56,7 @@ function NewUser() {
     //   languageId: enteredLanguage,
     // };
 
-    Axios
+    await Axios
     .post(`https://localhost:7201/api/PeopleAPI`, {
       // Name: newPerson.name,
       // Phonenumber: newPerson.phonenumber,
@@ -66,6 +66,7 @@ function NewUser() {
       Phonenumber: enteredPhoneNumber,
       CityId: enteredCity,
       LanguageId: enteredLanguage,
+      
     })
     .then(function (response) {
       console.log(response);
@@ -73,7 +74,7 @@ function NewUser() {
     .catch(function (error) {
       console.log(error);
     });
-
+    console.log(enteredName, enteredPhoneNumber, enteredCity, enteredLanguage)
     if(userStatus === null){
       setUserStatus(1)
     }
@@ -85,22 +86,6 @@ function NewUser() {
       // console.log(userStatus);
     }
 
-    // if(userStatus!== null){
-    //   let counter = userStatus;
-    //   counter++;
-    //   setUserStatus(counter);
-    //   // console.log(userStatus);
-    // }
-
-    // console.log(userStatus);
-    // const newValue = 
-    // console.log(newValue);
-    // setUserStatus()
-
-    // setUserStatus(counter);
-    // console.log(counter);
-    // counter++;
-
     setEnteredName("");
     setEnteredPhoneNumber("");
     setExistingCity("");
@@ -109,38 +94,19 @@ function NewUser() {
     
   };
 
-
-  // Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
-  // useEffect(() => {
-  //   const getPeopleData = async () => {
-  //     await Axios.get("https://localhost:7201/api/PeopleAPI")
-  //       .then((res) => {
-  //         setUserList(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   getPeopleData();
-  // }, [userStatus]);
-
-
-  // let postNewData = () => {
-  //   Axios
-  //   .post(`https://localhost:7201/api/PeopleAPI`, {
-  //     Name: newPerson.name,
-  //     Phonenumber: newPerson.phonenumber,
-  //     CityId: newPerson.cityId,
-  //     LanguageId: newPerson.languageId,
-  //   })
-  //   .then(function (response) {
-  //     console.log(response);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-  // }
-
+  useEffect(() => {
+    const getPeopleData = async () => {
+      const response = await Axios.get("https://localhost:7201/api/PeopleAPI")
+        .then((res) => {
+          setUserList(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getPeopleData();
+  }, [userStatus]);
+ 
   return (
     <Container className="mb-5 mt-5">
       <Card className="mb-3" style={{ color: "#000" }}>
@@ -231,6 +197,8 @@ function NewUser() {
                   className="form-control mt-3 mb-3"
                   variant="primary"
                   type="submit"
+                  // value={userStatus}
+                  // onChange={event => }
                 >
                   Add new user
                 </Button>

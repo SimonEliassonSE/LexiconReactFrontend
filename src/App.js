@@ -57,18 +57,18 @@ function App() {
   );
 
   Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
-  useEffect(() => {
-    const getPeopleData = async () => {
-      await Axios.get("https://localhost:7201/api/PeopleAPI")
-        .then((res) => {
-          setUserList(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getPeopleData();
-  }, [userStatus]);
+  // useEffect(() => {
+  //   const getPeopleData = async () => {
+  //     await Axios.get("https://localhost:7201/api/PeopleAPI")
+  //       .then((res) => {
+  //         setUserList(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
+  //   getPeopleData();
+  // }, [userStatus]);
 // }, [userStatus]);
 
   // useEffect(() => {

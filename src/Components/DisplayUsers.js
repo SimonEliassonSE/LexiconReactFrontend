@@ -3,13 +3,13 @@ import { UserArray, UserDetail } from "../index";
 // , CityArray, CountryArray, useEffect, UserArrayStatus
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-
+// import Axios from "axios";
 
 function DisplayUsers() {
   const { userList, setUserList } = useContext(UserArray);
   const { userDetail, setUserDetail } = useContext(UserDetail);
   const [order, setOrder] = useState("ASC");
-  // const { userStatus, setUserStatus } = useContext(UserArrayStatus)
+  // const { userStatus } = useContext(UserArrayStatus)
 
   // Sorting function
   const sorting = (col) => {
@@ -29,6 +29,19 @@ function DisplayUsers() {
     }
   };
 
+  // Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+  // useEffect(() => {
+  //   const getPeopleData = async () => {
+  //     await Axios.get("https://localhost:7201/api/PeopleAPI")
+  //       .then((res) => {
+  //         setUserList(res.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
+  //   getPeopleData();
+  // }, [userStatus]);
 
   const clickHandler = (user) => {
     const userData = {
